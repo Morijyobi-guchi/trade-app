@@ -5,7 +5,7 @@
 
 ## 設計資料
 本プロジェクトの要件定義書、外部設計書（画面遷移図、ER図等）は、以下のGoogleドライブからご覧いただけます。
-**[設計資料一式はこちら] (https://drive.google.com/drive/folders/1jdIBuVR-eZu1rN7TrFi3K17saMrZgNgv?usp=sharing)**
+**[設計資料一式はこちら] (https://drive.google.com/drive/folders/1OZIVmi6QUTN57urw1bq97EVNs7i0FXGS?usp=sharing)**
 
 ## 主な担当範囲
 - チームでの課題発見と、解決策としてのアプリケーションの企画
