@@ -13,11 +13,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 複数のテストユーザーを作成
+        User::factory(10)->create();
+
+        // 一般ユーザーのテストデータを作成
+        User::factory()->create([
+            'user_name' => '田中太郎',
+            'mail_address' => 'tanaka@example.com',
+            'department' => 1,
+            'entry_year' => 2022,
+            'password' => bcrypt('password'),
+            'account_expiration_date' => '2026-03-31',
+            'delete_flag' => false,
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'user_name' => '佐藤花子',
+            'mail_address' => 'sato@example.com',
+            'department' => 2,
+            'entry_year' => 2024,
+            'password' => bcrypt('password'),
+            'account_expiration_date' => '2027-03-31',
+            'delete_flag' => false,
+        ]);
+        User::factory()->create([
+            'user_name' => '山田タコ朗',
+            'mail_address' => 'tako@example.com',
+            'department' => 3,
+            'entry_year' => 2024,
+            'password' => bcrypt('password'),
+            'account_expiration_date' => '2026-03-31',
+            'delete_flag' => false,
         ]);
     }
 }
