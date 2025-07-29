@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use Illuminate\Database\Seeder;
 
-class AccountsSeeder extends Seeder
+class AccountSeeder extends Seeder
 {
     public function run(): void
     {
 
         // 一般ユーザーのテストデータを作成
-        Accounts::create([
+        Account::create([
             'user_name' => '田中太郎',
             'mail_address' => 'tanaka@example.com',
             'department' => 1,
@@ -21,7 +21,7 @@ class AccountsSeeder extends Seeder
             'delete_flag' => false,
         ]);
 
-        Accounts::create([
+        Account::create([
             'user_name' => '佐藤花子',
             'mail_address' => 'sato@example.com',
             'department' => 2,
@@ -30,7 +30,7 @@ class AccountsSeeder extends Seeder
             'account_expiration_date' => '2027-03-31',
             'delete_flag' => false,
         ]);
-        Accounts::create([
+        Account::create([
             'user_name' => '山田タコ朗',
             'mail_address' => 'tako@example.com',
             'department' => 3,
