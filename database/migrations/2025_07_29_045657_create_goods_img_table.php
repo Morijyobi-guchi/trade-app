@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('goods_img', function (Blueprint $table) {
             $table->id();
+            $table->string('img_pass');
+            $table->integer('goods_id');
+            $table->integer('displayorder_number');
+            $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });
     }

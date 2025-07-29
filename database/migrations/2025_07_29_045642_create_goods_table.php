@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('goods', function (Blueprint $table) {
             $table->id();
+            $table->string('goods_name');
+            $table->integer('category_id');
+            $table->integer('situation_id');
+            $table->string('transaction_type');
+            $table->string('size')->nullable();
+            $table->string('quantity');
+            $table->text('explanation');
+            $table->date('listing_deadline');
+            $table->integer('trading_status_id');
+            $table->integer('account_id');
+            $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });
     }
