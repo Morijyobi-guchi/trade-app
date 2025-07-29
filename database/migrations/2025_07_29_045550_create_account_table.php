@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('account', function (Blueprint $table) {
             $table->id();
+            $table->string('user_name');
+            $table->string('mail_address');
+            $table->integer('department');
+            $table->integer('entry_year');
+            $table->string('password');
+            $table->date('account_expiration_date');
+            $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });
     }
