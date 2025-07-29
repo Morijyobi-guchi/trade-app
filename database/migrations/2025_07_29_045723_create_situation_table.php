@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('situation', function (Blueprint $table) {
             $table->id();
+            $table->string('goods_situation');
+            $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });
     }

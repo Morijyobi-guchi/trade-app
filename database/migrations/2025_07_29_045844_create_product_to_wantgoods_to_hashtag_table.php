@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('product_to_wantgoods_to_hashtag', function (Blueprint $table) {
             $table->id();
+            $table->integer('goods_ID');
+            $table->integer('want_goods_ID');
+            $table->string('hashtag_list');
+            $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });
     }
