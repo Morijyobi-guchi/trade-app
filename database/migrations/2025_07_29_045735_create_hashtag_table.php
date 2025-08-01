@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('hashtag', function (Blueprint $table) {
             $table->id();
+            $table->string('hashtag_name');
             $table->timestamps();
         });
     }

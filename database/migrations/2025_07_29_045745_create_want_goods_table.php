@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('want_goods', function (Blueprint $table) {
             $table->id();
+            $table->string('want_goods_name');
+            $table->integer('account_ID');
+            $table->integer('category_id');
+            $table->text('exposition');
+            $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });
     }
