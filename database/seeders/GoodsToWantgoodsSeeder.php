@@ -51,5 +51,33 @@ class GoodsToWantgoodsSeeder extends Seeder
             'want_goods_ID' => 4,
             'delete_flag' => false,
         ]);
+
+        // 高級万年筆（goods_id=11）とデザイン系参考書（want_goods_id=3）のマッチング
+        GoodsToWantgoods::create([
+            'goods_ID' => 11,
+            'want_goods_ID' => 3,
+            'delete_flag' => false,
+        ]);
+
+        // ワンピース全巻（goods_id=6）とプログラミング本（want_goods_id=1）のマッチング
+        GoodsToWantgoods::create([
+            'goods_ID' => 6,
+            'want_goods_ID' => 1,
+            'delete_flag' => false,
+        ]);
+
+        // キャンプテント（goods_id=9）とスポーツ用品（want_goods_id=5）のマッチング
+        GoodsToWantgoods::create([
+            'goods_ID' => 9,
+            'want_goods_ID' => 5,
+            'delete_flag' => false,
+        ]);
+
+        // スキンケアセット（goods_id=10）とファッション小物（want_goods_id=6）のマッチング
+        GoodsToWantgoods::create([
+            'goods_ID' => 10,
+            'want_goods_ID' => 6,
+            'delete_flag' => false,
+        ]);
     }
 }
