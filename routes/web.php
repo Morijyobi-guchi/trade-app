@@ -8,3 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/match-tags', [matchController::class, 'matchTags']);
+
+Route::get('/register', function () {
+    return view('regster');
+});
