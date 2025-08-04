@@ -15,8 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // 個別のシーダーを実行順序に注意して呼び出し
         $this->call([
-            AccountSeeder::class,   // アカウントを先に作成
-            GoodsSeeder::class,     // 商品データを作成
+            DepartmentSeeder::class,    // 部門を先に作成（外部キー参照される側）
+            CategorySeeder::class,      // カテゴリを作成
+            SituationSeeder::class,     // 状況を作成
+            HashtagSeeder::class,       // ハッシュタグを作成
+            AccountSeeder::class,       // アカウントを作成
+            GoodsSeeder::class,         // 商品データを作成（外部キーを持つ側）
         ]);
     }
 }
