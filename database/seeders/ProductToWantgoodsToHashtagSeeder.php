@@ -14,7 +14,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 1,
             'want_goods_ID' => 1,
-            'hashtag_list' => 'プログラミング,IT,勉強,技術書',
+            'hashtag_list' => 'プログラミング,IT,勉強,技術書,Laravel',
             'delete_flag' => false,
         ]);
 
@@ -22,7 +22,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 12,
             'want_goods_ID' => 2,
-            'hashtag_list' => 'PC機器,ゲーム,マウス,高性能',
+            'hashtag_list' => 'PC機器,ゲーム,マウス,高性能,Logicool',
             'delete_flag' => false,
         ]);
 
@@ -30,7 +30,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 4,
             'want_goods_ID' => 4,
-            'hashtag_list' => 'ゲーム,アニメ,カード,コレクション',
+            'hashtag_list' => 'ゲーム,アニメ,カード,コレクション,フィギュア',
             'delete_flag' => false,
         ]);
 
@@ -38,7 +38,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 8,
             'want_goods_ID' => 5,
-            'hashtag_list' => 'スポーツ,ラケット,運動,趣味',
+            'hashtag_list' => 'スポーツ,ラケット,運動,趣味,バドミントン',
             'delete_flag' => false,
         ]);
 
@@ -46,7 +46,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 3,
             'want_goods_ID' => 6,
-            'hashtag_list' => 'ファッション,おしゃれ,アクセサリー,コーディネート',
+            'hashtag_list' => 'ファッション,おしゃれ,アクセサリー,コーディネート,デニム',
             'delete_flag' => false,
         ]);
 
@@ -54,15 +54,15 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 7,
             'want_goods_ID' => 4,
-            'hashtag_list' => 'アニメ,Blu-ray,限定版,コレクション',
+            'hashtag_list' => 'アニメ,Blu-ray,限定版,コレクション,レア',
             'delete_flag' => false,
         ]);
 
-        // アコースティックギター（goods_id=5）とデザイン系参考書（want_goods_id=3）の関連ハッシュタグ
+        // 高級万年筆（goods_id=11）とデザイン系参考書（want_goods_id=3）の関連ハッシュタグ
         ProductToWantgoodsToHashtag::create([
-            'goods_ID' => 5,
+            'goods_ID' => 11,
             'want_goods_ID' => 3,
-            'hashtag_list' => '音楽,デザイン,クリエイティブ,趣味',
+            'hashtag_list' => '文房具,デザイン,クリエイティブ,高級,UI/UX',
             'delete_flag' => false,
         ]);
 
@@ -70,7 +70,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 6,
             'want_goods_ID' => 1,
-            'hashtag_list' => '漫画,勉強,読書,知識',
+            'hashtag_list' => '漫画,勉強,読書,知識,プログラミング',
             'delete_flag' => false,
         ]);
 
@@ -78,7 +78,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 9,
             'want_goods_ID' => 5,
-            'hashtag_list' => 'アウトドア,キャンプ,スポーツ,自然',
+            'hashtag_list' => 'アウトドア,キャンプ,スポーツ,自然,アクティブ',
             'delete_flag' => false,
         ]);
 
@@ -86,7 +86,7 @@ class ProductToWantgoodsToHashtagSeeder extends Seeder
         ProductToWantgoodsToHashtag::create([
             'goods_ID' => 10,
             'want_goods_ID' => 6,
-            'hashtag_list' => '美容,ファッション,スキンケア,おしゃれ',
+            'hashtag_list' => '美容,ファッション,スキンケア,おしゃれ,美品',
             'delete_flag' => false,
         ]);
     }
