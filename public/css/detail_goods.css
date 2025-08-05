@@ -40,10 +40,55 @@ body {
 
 .want-goods-item {
   border: 1px solid #eee;
-  padding: 10px;
+  padding: 0;
   margin: 10px 0;
   border-radius: 5px;
   background-color: #f9f9f9;
+  overflow: hidden;
+}
+
+.want-goods-header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.want-goods-header:hover {
+  background-color: #0056b3;
+}
+
+.want-goods-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.accordion-icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.want-goods-content {
+  padding: 0 15px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: white;
+}
+
+.want-goods-content.active {
+  max-height: 1000px;
+  padding: 15px;
+}
+
+.want-goods-content p,
+.want-goods-content ul {
+  margin: 10px 0;
 }
 
 .json-display {
@@ -76,4 +121,94 @@ body {
   height: auto;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* スライドショーのスタイル */
+.slideshow-container {
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.slide {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.slide:first-child {
+  display: block;
+}
+
+/* 取引形態オーバーレイ */
+.transaction-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 123, 255, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ナビゲーションボタン */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s ease;
+  border-radius: 0 3px 3px 0;
+  background-color: rgba(0,0,0,0.5);
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* スライド番号 */
+.slide-number {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+/* スライドショーのタイトル */
+.slideshow-title {
+  text-align: center;
+  margin: 15px 0 10px 0;
+  font-weight: bold;
+  color: #333;
 }

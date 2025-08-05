@@ -9,66 +9,78 @@
 <body>
     <div class="container">
         <h1>出品物詳細</h1>
-        
+        @if(isset($data['images']) && count($data['images']) > 0)
+        <div class="section">
+            <div class="slideshow-title">商品画像</div>
+            <div class="slideshow-container">
+                <div class="slide-number">1 / {{ count($data['images']) }}</div>
+                @foreach($data['images'] as $index => $image)
+                <div class="slide" style="{{ $index === 0 ? 'display: block;' : 'display: none;' }}">
+                    <div class="transaction-overlay">{{ $data['transaction_type'] ?? 'データなし' }}</div>
+                    <img src="{{ asset('images/goods/' . basename($image)) }}" alt="商品画像 {{ $index + 1 }}">
+                </div>
+                @endforeach
+                @if(count($data['images']) > 1)
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+                @endif
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <h2>{{ $data['goods_name'] ?? 'データなし' }}</h2>
+            </div>
+        </div>
+        @endif
         @if(isset($data))
             <div class="section">
-                <h2>基本情報</h2>
-                <p><strong>商品名:</strong> {{ $data['goods_name'] ?? 'データなし' }}</p>
+                <h2>出品物の情報</h2>
+                <p><strong>状態:</strong> {{ $data['situation'] ?? 'データなし' }}</p>
                 <p><strong>カテゴリー:</strong> {{ $data['category'] ?? 'データなし' }}</p>
-                <p><strong>状況:</strong> {{ $data['situation'] ?? 'データなし' }}</p>
+                <div style="margin: 10px 0;">
+                    @if(isset($data['hashtags']) && count($data['hashtags']) > 0)
+                        @foreach($data['hashtags'] as $hashtag)
+                            <span class="hashtag">#{{ $hashtag }}</span>
+                        @endforeach
+                    @endif
+                </div>
                 <p><strong>サイズ:</strong> {{ $data['size'] ?? 'データなし' }}</p>
                 <p><strong>数量:</strong> {{ $data['quantity'] ?? 'データなし' }}</p>
-                <p><strong>取引タイプ:</strong> {{ $data['transaction_type'] ?? 'データなし' }}</p>
+                <p><strong>説明:</strong> {{ $data['description'] ?? 'データなし' }}</p>
             </div>
-
-            <div class="section">
-                <h2>説明</h2>
-                <p>{{ $data['description'] ?? 'データなし' }}</p>
-            </div>
-
-            @if(isset($data['images']) && count($data['images']) > 0)
-                <div class="section">
-                    <h2>画像一覧</h2>
-                    <ul class="image-list">
-                        @foreach($data['images'] as $image)
-                            <li><img src="{{ asset('images/goods/' . basename($image)) }}" alt="商品画像" style="max-width: 300px; height: auto; border-radius: 5px;"></li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            @if(isset($data['hashtags']) && count($data['hashtags']) > 0)
-                <div class="section">
-                    <h2>ハッシュタグ</h2>
-                    @foreach($data['hashtags'] as $hashtag)
-                        <span class="hashtag">#{{ $hashtag }}</span>
-                    @endforeach
-                </div>
-            @endif
-
             @if(isset($data['want_goods']) && count($data['want_goods']) > 0)
                 <div class="section">
                     <h2>欲しい物一覧</h2>
-                    @foreach($data['want_goods'] as $wantGoods)
+                    @foreach($data['want_goods'] as $index => $wantGoods)
                         <div class="want-goods-item">
-                            <h3>{{ $wantGoods['name'] ?? 'データなし' }}</h3>
-                            <p><strong>説明:</strong> {{ $wantGoods['description'] ?? 'データなし' }}</p>
-                            
-                            @if(isset($wantGoods['images']) && count($wantGoods['images']) > 0)
-                                <p><strong>画像:</strong></p>
-                                <ul class="image-list">
-                                    @foreach($wantGoods['images'] as $image)
-                                        <li><img src="{{ asset('images/want_goods/' . basename($image)) }}" alt="欲しい物画像" style="max-width: 200px; height: auto; border-radius: 5px;"></li>
+                            <div class="want-goods-header" onclick="toggleAccordion({{ $index }})">
+                                <h3>{{ $wantGoods['name'] ?? 'データなし' }}</h3>
+                                <span class="accordion-icon" id="icon-{{ $index }}">▼</span>
+                            </div>
+                            <div class="want-goods-content" id="content-{{ $index }}">
+                                <p><strong>説明:</strong> {{ $wantGoods['description'] ?? 'データなし' }}</p>
+                                
+                                @if(isset($wantGoods['images']) && count($wantGoods['images']) > 0)
+                                    <div class="slideshow-title">画像</div>
+                                    <div class="slideshow-container">
+                                        <div class="slide-number">1 / {{ count($wantGoods['images']) }}</div>
+                                        @foreach($wantGoods['images'] as $wantIndex => $image)
+                                        <div class="slide" style="{{ $wantIndex === 0 ? 'display: block;' : 'display: none;' }}">
+                                            <img src="{{ asset('images/want_goods/' . basename($image)) }}" alt="欲しい物画像 {{ $wantIndex + 1 }}" style="max-height: 250px;">
+                                        </div>
+                                        @endforeach
+                                        @if(count($wantGoods['images']) > 1)
+                                        <a class="prev">&#10094;</a>
+                                        <a class="next">&#10095;</a>
+                                        @endif
+                                    </div>
+                                @endif
+                                
+                                @if(isset($wantGoods['hashtags']) && count($wantGoods['hashtags']) > 0)
+                                    <p><strong>ハッシュタグ:</strong></p>
+                                    @foreach($wantGoods['hashtags'] as $hashtag)
+                                        <span class="hashtag">#{{ $hashtag }}</span>
                                     @endforeach
-                                </ul>
-                            @endif
-                            
-                            @if(isset($wantGoods['hashtags']) && count($wantGoods['hashtags']) > 0)
-                                <p><strong>ハッシュタグ:</strong></p>
-                                @foreach($wantGoods['hashtags'] as $hashtag)
-                                    <span class="hashtag">#{{ $hashtag }}</span>
-                                @endforeach
-                            @endif
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -82,5 +94,7 @@
             </div>
         @endif
     </div>
+
+    <script src="{{ asset('js/detail_goods.js') }}"></script>
 </body>
 </html>
