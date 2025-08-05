@@ -13,7 +13,6 @@
         <div class="section">
             <div class="slideshow-title">商品画像</div>
             <div class="slideshow-container">
-                <div class="slide-number">1 / {{ count($data['images']) }}</div>
                 @foreach($data['images'] as $index => $image)
                 <div class="slide" style="{{ $index === 0 ? 'display: block;' : 'display: none;' }}">
                     <div class="transaction-overlay">{{ $data['transaction_type'] ?? 'データなし' }}</div>
@@ -24,6 +23,9 @@
                 <a class="prev">&#10094;</a>
                 <a class="next">&#10095;</a>
                 @endif
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <div class="slide-number">1 / {{ count($data['images']) }}</div>
             </div>
             <div style="text-align: center; margin-top: 15px;">
                 <h2>{{ $data['goods_name'] ?? 'データなし' }}</h2>
@@ -61,7 +63,6 @@
                                 @if(isset($wantGoods['images']) && count($wantGoods['images']) > 0)
                                     <div class="slideshow-title">画像</div>
                                     <div class="slideshow-container">
-                                        <div class="slide-number">1 / {{ count($wantGoods['images']) }}</div>
                                         @foreach($wantGoods['images'] as $wantIndex => $image)
                                         <div class="slide" style="{{ $wantIndex === 0 ? 'display: block;' : 'display: none;' }}">
                                             <img src="{{ asset('images/want_goods/' . basename($image)) }}" alt="欲しい物画像 {{ $wantIndex + 1 }}" style="max-height: 250px;">
@@ -71,6 +72,9 @@
                                         <a class="prev">&#10094;</a>
                                         <a class="next">&#10095;</a>
                                         @endif
+                                    </div>
+                                    <div style="text-align: center; margin-top: 10px;">
+                                        <div class="slide-number">1 / {{ count($wantGoods['images']) }}</div>
                                     </div>
                                 @endif
                                 
