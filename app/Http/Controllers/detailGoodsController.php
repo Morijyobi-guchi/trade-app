@@ -54,40 +54,42 @@ class detailGoodsController extends Controller
             }
         }
         
-        // 欲しい物の情報を取得
-        $wantGoodsIds = GoodsToWantgoods::where('goods_ID', $goodsId)
-                                       ->where('delete_flag', 0)
-                                       ->pluck('want_goods_ID');
-        
+        // 欲しい物の情報を取得（transaction_typeが0（交換）の場合のみ）
         $wantGoodsList = [];
-        foreach ($wantGoodsIds as $wantGoodsId) {
-            $wantGoods = WantGoods::find($wantGoodsId);
-            if ($wantGoods && !$wantGoods->delete_flag) {
-                // 欲しい物の画像を取得
-                $wantGoodsImages = WantGoodsImg::where('want_goods_id', $wantGoodsId)
-                                              ->where('delete_flag', 0)
-                                              ->pluck('image_path');
-                
-                // 欲しい物のハッシュタグを取得
-                $wantGoodsHashtagsData = WantlistToHashtag::where('want_goods_ID', $wantGoodsId)
-                                                         ->where('delete_flag', 0)
-                                                         ->get();
-                
-                $wantGoodsHashtags = [];
-                foreach ($wantGoodsHashtagsData as $hashtagData) {
-                    // hashtag_listをカンマ区切りで分割（または適切な区切り文字で分割）
-                    $hashtagNames = explode(',', $hashtagData->hashtag_list);
-                    foreach ($hashtagNames as $tagName) {
-                        $wantGoodsHashtags[] = trim($tagName);
+        if ($goods->transaction_type == 0) {
+            $wantGoodsIds = GoodsToWantgoods::where('goods_ID', $goodsId)
+                                           ->where('delete_flag', 0)
+                                           ->pluck('want_goods_ID');
+            
+            foreach ($wantGoodsIds as $wantGoodsId) {
+                $wantGoods = WantGoods::find($wantGoodsId);
+                if ($wantGoods && !$wantGoods->delete_flag) {
+                    // 欲しい物の画像を取得
+                    $wantGoodsImages = WantGoodsImg::where('want_goods_id', $wantGoodsId)
+                                                  ->where('delete_flag', 0)
+                                                  ->pluck('image_path');
+                    
+                    // 欲しい物のハッシュタグを取得
+                    $wantGoodsHashtagsData = WantlistToHashtag::where('want_goods_ID', $wantGoodsId)
+                                                             ->where('delete_flag', 0)
+                                                             ->get();
+                    
+                    $wantGoodsHashtags = [];
+                    foreach ($wantGoodsHashtagsData as $hashtagData) {
+                        // hashtag_listをカンマ区切りで分割（または適切な区切り文字で分割）
+                        $hashtagNames = explode(',', $hashtagData->hashtag_list);
+                        foreach ($hashtagNames as $tagName) {
+                            $wantGoodsHashtags[] = trim($tagName);
+                        }
                     }
+                    
+                    $wantGoodsList[] = [
+                        'name' => $wantGoods->want_goods_name,
+                        'description' => $wantGoods->exposition,
+                        'images' => $wantGoodsImages,
+                        'hashtags' => $wantGoodsHashtags
+                    ];
                 }
-                
-                $wantGoodsList[] = [
-                    'name' => $wantGoods->want_goods_name,
-                    'description' => $wantGoods->exposition,
-                    'images' => $wantGoodsImages,
-                    'hashtags' => $wantGoodsHashtags
-                ];
             }
         }
         
