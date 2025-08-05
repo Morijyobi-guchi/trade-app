@@ -8,7 +8,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>出品物詳細</h1>
+        <header>
+            <a class="return" href="">←</a>
+            <h1>出品物詳細</h1>
+        </header>
         @if(isset($data['images']) && count($data['images']) > 0)
         <div class="section">
             <div class="slideshow-container">
