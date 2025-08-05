@@ -33,7 +33,7 @@ class detailGoodsController extends Controller
         
         // 物品の状態情報を取得
         $situation = Situation::find($goods->situation_id);
-        
+
         // 物品の画像を取得
         $goodsImages = GoodsImg::where('goods_id', $goodsId)
                               ->where('delete_flag', 0)
@@ -101,7 +101,7 @@ class detailGoodsController extends Controller
             'situation' => $situation ? $situation->goods_situation : null,
             'size' => $goods->size,
             'quantity' => $goods->quantity,
-            'transaction_type' => $situation ? $situation->goods_situation : null,
+            'transaction_type' => $goods->transaction_type == 0 ? "交換" : "譲渡",
             'want_goods' => $wantGoodsList
         ];
         
