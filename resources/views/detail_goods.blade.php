@@ -82,7 +82,6 @@
                                 @endif
                                 
                                 @if(isset($wantGoods['hashtags']) && count($wantGoods['hashtags']) > 0)
-                                    <p><strong>ハッシュタグ:</strong></p>
                                     @foreach($wantGoods['hashtags'] as $hashtag)
                                         <span class="hashtag">#{{ $hashtag }}</span>
                                     @endforeach
