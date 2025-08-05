@@ -105,6 +105,12 @@ class detailGoodsController extends Controller
             'want_goods' => $wantGoodsList
         ];
         
-        return response()->json($response);
+        // Accept ヘッダーをチェックしてJSONが要求された場合はJSONを返す
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json($response);
+        }
+        
+        // そうでなければビューにデータを渡す
+        return view('detail_goods', ['data' => $response]);
     }
 }
