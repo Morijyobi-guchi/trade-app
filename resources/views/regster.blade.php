@@ -12,11 +12,23 @@
         <p>出品する</p>
     </div>
     <form action="">
-        <div>
-            <div><img src="{{ Storage::url('images/camera.png') }}" alt="カメラ"></div>
-            <div></div>
-            <div></div>
-            <div></div>
+        <div id="imageContainer">
+            <div class="image-item">
+                <input type="file" id="imageUpload1" accept="image/*" style="display: none;">
+                <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload1').click();" style="cursor: pointer;" class="camera-icon">
+            </div>
+            <div class="image-item">
+                <input type="file" id="imageUpload2" accept="image/*" style="display: none;">
+                <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload2').click();" style="cursor: pointer;" class="camera-icon">
+            </div>
+            <div class="image-item">
+                <input type="file" id="imageUpload3" accept="image/*" style="display: none;">
+                <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload3').click();" style="cursor: pointer;" class="camera-icon">
+            </div>
+            <div class="image-item">
+                <input type="file" id="imageUpload4" accept="image/*" style="display: none;">
+                <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload4').click();" style="cursor: pointer;" class="camera-icon">
+            </div>
         </div>
         <div>
             <p>物品名</p>
@@ -64,20 +76,46 @@
         <p>交換したいもの</p>
         <div>
             <p>ほしいものリスト</p>
-            <div>
-                <p>ピカチュウ　ぬいぐるみ</p>
-                <div><img src="{{ Storage::url('images/minus.png') }}" alt="マイナス"></div>
-            </div>
-            <div>
-                <p>Elecom　静音マウス</p>
-                <div><img src="{{ Storage::url('images/minus.png') }}" alt="マイナス"></div>
-            </div>
-            <div>
-                <img src="{{ Storage::url('images/plus.png') }}" alt="プラス">
-                <p>ほしいものを追加する</p>
-            </div>
+           @if(isset($wantGoods) && count($wantGoods) > 0)
+                @foreach($wantGoods as $wantGood)
+                    <div>
+                        <p>{{ $wantGood }}</p>
+                        <div><img src="{{ Storage::url('images/minus.png') }}" alt="マイナス"></div>
+                    </div>
+                @endforeach
+            @else
+                <div>
+                    <p>ほしいものがありません</p>
+                </div>
+            @endif
         </div>
         <input type="submit" value="確認画面へ">
     </form>
+    <script>
+        function handleImageChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // カメラアイコンを選択した画像に置き換える
+                    const inputElement = event.target;
+                    const cameraImg = inputElement.nextElementSibling;
+                    cameraImg.src = e.target.result;
+                    cameraImg.style.width = '100px';
+                    cameraImg.style.height = '100px';
+                    cameraImg.style.objectFit = 'cover';
+                    cameraImg.onclick = null; // クリックイベントを無効化
+                    
+                    // 新しいカメラアイコンを追加
+                    addImageUpload();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        document.getElementById('imageUpload1').addEventListener('change', handleImageChange);
+        document.getElementById('imageUpload2').addEventListener('change', handleImageChange);
+        document.getElementById('imageUpload3').addEventListener('change', handleImageChange);
+        document.getElementById('imageUpload4').addEventListener('change', handleImageChange);
+    </script>
 </body>
 </html>

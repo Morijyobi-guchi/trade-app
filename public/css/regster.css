@@ -2,3 +2,25 @@
 .title {
     display: flex;
 }
+img{
+    width: 1rem;
+}
+
+/* public/css/regster.css */
+#imageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-item {
+    display: inline-block;
+}
+
+.camera-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+}

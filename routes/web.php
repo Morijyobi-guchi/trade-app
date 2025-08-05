@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\goodsController;
 use App\Http\Controllers\matchController;
 
 Route::get('/', function () {
@@ -9,6 +10,4 @@ Route::get('/', function () {
 
 Route::get('/match-tags', [matchController::class, 'matchTags']);
 
-Route::get('/register', function () {
-    return view('regster');
-});
+Route::get('/register', [goodsController::class, 'getWantGoods']);
