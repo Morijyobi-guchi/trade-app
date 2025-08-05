@@ -11,7 +11,6 @@
         <h1>出品物詳細</h1>
         @if(isset($data['images']) && count($data['images']) > 0)
         <div class="section">
-            <div class="slideshow-title">商品画像</div>
             <div class="slideshow-container">
                 @foreach($data['images'] as $index => $image)
                 <div class="slide" style="{{ $index === 0 ? 'display: block;' : 'display: none;' }}">
@@ -44,13 +43,15 @@
                         @endforeach
                     @endif
                 </div>
-                <p><strong>サイズ:</strong> {{ $data['size'] ?? 'データなし' }}</p>
-                <p><strong>数量:</strong> {{ $data['quantity'] ?? 'データなし' }}</p>
-                <p><strong>説明:</strong> {{ $data['description'] ?? 'データなし' }}</p>
+                <div class="size_num">
+                    <p><strong>サイズ:</strong> {{ $data['size'] ?? 'データなし' }}</p>
+                    <p><strong>数量:</strong> {{ $data['quantity'] ?? 'データなし' }}</p>
+                </div>
+                    <p><strong>説明:</strong> {{ $data['description'] ?? 'データなし' }}</p>
             </div>
             @if(isset($data['want_goods']) && count($data['want_goods']) > 0)
                 <div class="section">
-                    <h2>欲しい物一覧</h2>
+                    <h2>欲しい物の情報</h2>
                     @foreach($data['want_goods'] as $index => $wantGoods)
                         <div class="want-goods-item">
                             <div class="want-goods-header" onclick="toggleAccordion({{ $index }})">
@@ -61,7 +62,6 @@
                                 <p><strong>説明:</strong> {{ $wantGoods['description'] ?? 'データなし' }}</p>
                                 
                                 @if(isset($wantGoods['images']) && count($wantGoods['images']) > 0)
-                                    <div class="slideshow-title">画像</div>
                                     <div class="slideshow-container">
                                         @foreach($wantGoods['images'] as $wantIndex => $image)
                                         <div class="slide" style="{{ $wantIndex === 0 ? 'display: block;' : 'display: none;' }}">

@@ -151,6 +151,10 @@ body {
 .slide:first-child {
   display: block;
 }
+.size_num{
+  display: flex;
+  justify-content: space-between;
+}
 
 /* 取引形態オーバーレイ */
 .transaction-overlay {
