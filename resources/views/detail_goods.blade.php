@@ -29,9 +29,7 @@
             <div style="text-align: center; margin-top: 10px;">
                 <div class="slide-number">1 / {{ count($data['images']) }}</div>
             </div>
-            <div style="text-align: center; margin-top: 15px;">
-                <h2>{{ $data['goods_name'] ?? 'データなし' }}</h2>
-            </div>
+            <p class="goods_name">{{ $data['goods_name'] ?? 'データなし' }}</p>
         </div>
         @endif
         @if(isset($data))
