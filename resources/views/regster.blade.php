@@ -79,7 +79,8 @@
            @if(isset($wantGoods) && count($wantGoods) > 0)
                 @foreach($wantGoods as $wantGood)
                     <div>
-                        <p>{{ $wantGood }}</p>
+                        <p>{{ $wantGood['want_goods_name'] }}</p>
+                        <input type="hidden" name="" value = "{{ $wantGood['id'] }}">
                         <div><img src="{{ Storage::url('images/minus.png') }}" alt="マイナス"></div>
                     </div>
                 @endforeach

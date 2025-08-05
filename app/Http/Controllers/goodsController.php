@@ -12,7 +12,7 @@ class goodsController extends Controller
         // account_IDが1でdelete_flagが0のwant_goods_nameを取得
         $wantGoodsNames = WantGoods::where('account_ID', 1)
                                   ->where('delete_flag', 0)
-                                  ->pluck('want_goods_name');
+                                  ->get(['id','want_goods_name', 'category_id', 'exposition']);
         
         // 配列として取得
         $wantGoodsArray = $wantGoodsNames->toArray();
