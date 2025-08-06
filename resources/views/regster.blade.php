@@ -11,40 +11,43 @@
         <img src="{{ Storage::url('images/left_arrow.png') }}" alt="左矢印">
         <p>出品する</p>
     </div>
-    <form action="">
+    <form action="{{ route('goods.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div id="imageContainer">
             <div class="image-item">
-                <input type="file" id="imageUpload1" accept="image/*" style="display: none;">
+                <input type="file" id="imageUpload1" accept="image/*" name="images[]" style="display: none;">
                 <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload1').click();" style="cursor: pointer;" class="camera-icon">
             </div>
             <div class="image-item">
-                <input type="file" id="imageUpload2" accept="image/*" style="display: none;">
+                <input type="file" id="imageUpload2" accept="image/*" name="images[]" style="display: none;">
                 <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload2').click();" style="cursor: pointer;" class="camera-icon">
             </div>
             <div class="image-item">
-                <input type="file" id="imageUpload3" accept="image/*" style="display: none;">
+                <input type="file" id="imageUpload3" accept="image/*" name="images[]" style="display: none;">
                 <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload3').click();" style="cursor: pointer;" class="camera-icon">
             </div>
             <div class="image-item">
-                <input type="file" id="imageUpload4" accept="image/*" style="display: none;">
+                <input type="file" id="imageUpload4" accept="image/*" name="images[]" style="display: none;">
                 <img src="{{ Storage::url('images/camera.png') }}" alt="カメラ" onclick="document.getElementById('imageUpload4').click();" style="cursor: pointer;" class="camera-icon">
             </div>
         </div>
         <div>
             <p>物品名</p>
-            <input type="text">
+            <input type="text" name="goods_name" required>
         </div>
         <div>
+            <!-- カテゴリをDBから取得し表示 -->
             <p>物品カテゴリ</p>
-            <select name="" id="">
+            <select name="category_id" required>
                 <option value="">例１</option>
                 <option value="">例２</option>
                 <option value="">例３</option>
             </select>
         </div>
         <div>
+            <!-- 状態をDBから取得し表示 -->
             <p>物品の状態</p>
-            <select name="" id="">
+            <select name="situation_id">
                 <option value="">例１</option>
                 <option value="">例２</option>
                 <option value="">例３</option>
@@ -53,24 +56,24 @@
         <div>
             <p>物品のハッシュタグ</p>
             <div>
-                <input type="text">
-                <input type="text">
-                <input type="text">
+                <input type="text" name="hashtags[]">
+                <input type="text" name="hashtags[]">
+                <input type="text" name="hashtags[]">
             </div>
             <div><img src="{{ Storage::url('images/plus.png') }}" alt="プラス"></div>
         </div>
         <div>
             <p>説明</p>
-            <textarea name="" id=""></textarea>
+            <textarea name="explanation" rows="4" required></textarea>
         </div>
         <div>
             <p>期限</p>
-            <input type="date" name="" id="">
+            <input type="date" name="listing_deadline" required>
         </div>
         <div>
             <p>取引形態</p>
-            <input type="radio" name="" id="">交換
-            <input type="radio" name="" id="">譲渡
+            <input type="radio" name="transaction_type" value="1" id="exchange">交換
+            <input type="radio" name="transaction_type" value="2" id="transfer">譲渡
         </div>
 
         <p>交換したいもの</p>
@@ -79,8 +82,8 @@
            @if(isset($wantGoods) && count($wantGoods) > 0)
                 @foreach($wantGoods as $wantGood)
                     <div>
-                        <p>{{ $wantGood['want_goods_name'] }}</p>
-                        <input type="hidden" name="" value = "{{ $wantGood['id'] }}">
+                        <input type="hidden" name="want_goods_ids[]" value="{{ $wantGood['id'] }}" id="want_{{ $wantGood['id'] }}">
+                        <label for="want_{{ $wantGood['id'] }}">{{ $wantGood['want_goods_name'] }}</label>
                         <div><img src="{{ Storage::url('images/minus.png') }}" alt="マイナス"></div>
                     </div>
                 @endforeach

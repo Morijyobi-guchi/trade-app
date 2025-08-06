@@ -11,3 +11,5 @@ Route::get('/', function () {
 Route::get('/match-tags', [matchController::class, 'matchTags']);
 
 Route::get('/register', [goodsController::class, 'getWantGoods']);
+Route::post('/goods/store', [goodsController::class, 'store'])->name('goods.store');
+
