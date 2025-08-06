@@ -39,18 +39,18 @@
             <!-- カテゴリをDBから取得し表示 -->
             <p>物品カテゴリ</p>
             <select name="category_id" required>
-                <option value="">例１</option>
-                <option value="">例２</option>
-                <option value="">例３</option>
+                @foreach($category as $cat)
+                <option value="{{$cat -> id }}">{{ $cat -> category}}</option>
+                @endforeach
             </select>
         </div>
         <div>
             <!-- 状態をDBから取得し表示 -->
             <p>物品の状態</p>
             <select name="situation_id">
-                <option value="">例１</option>
-                <option value="">例２</option>
-                <option value="">例３</option>
+                @foreach($situation as $sit)
+                <option value="{{ $sit -> id }}">{{ $sit -> goods_situation}}</option>
+                @endforeach
             </select>
         </div>
         <div>

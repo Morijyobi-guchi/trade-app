@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\WantGoods;
+use App\Models\Category;
+use App\Models\Situation;
 
 class goodsController extends Controller
 {
@@ -14,50 +16,60 @@ class goodsController extends Controller
                                   ->where('delete_flag', 0)
                                   ->get(['id','want_goods_name', 'category_id', 'exposition']);
         
-        // 配列として取得
-        $wantGoodsArray = $wantGoodsNames->toArray();
-        // または配列を返す
-        return view('regster', ['wantGoods' => $wantGoodsNames]);
+        // カテゴリも取得
+        $category = Category::where('delete_flag', 0)->get();
+        $situation = Situation::where('delete_flag', 0)->get();
+        
+        // 両方のデータをビューに渡す
+        return view('regster', [
+            'wantGoods' => $wantGoodsNames,
+            'category' => $category,
+            'situation' => $situation,
+        ]);
     }
 
     public function store(Request $request)
     {
-        // フォームデータを取得
-        $formData = $request->all();
+
+        $category_name = Category::where('id',$request->input('category_id'))->value('category');
+        $situation_name = Situation::where('id',$request->input('situation_id'))->value('goods_situation');
+        // セッションにデータを保存
+        $request->session()->put('form_data', [
+            'goods_name' => $request->input('goods_name'),
+            'category_id' => $request->input('category_id'),
+            'category_name' => $category_name,
+            'situation_name' => $situation_name,
+            'situation_id' => $request->input('situation_id'),
+            'explanation' => $request->input('explanation'),
+            'listing_deadline' => $request->input('listing_deadline'),
+            'transaction_type' => $request->input('transaction_type'),
+            'hashtags' => array_filter($request->input('hashtags', [])),
+            'want_goods_ids' => $request->input('want_goods_ids', []),
+            // 'image_paths' => $imagePaths
+        ]);
+
+        return redirect()->route('goods.confirm');
+    }
+
+    public function confirm(Request $request)
+    {
+        $formData = $request->session()->get('form_data');
         
-        // 入力値を表示
-        echo "<h2>フォームに入力された値:</h2>";
-        echo "<strong>物品名:</strong> " . $request->input('goods_name') . "<br>";
-        echo "<strong>カテゴリID:</strong> " . $request->input('category_id') . "<br>";
-        echo "<strong>状態ID:</strong> " . $request->input('situation_id') . "<br>";
-        echo "<strong>説明:</strong> " . $request->input('explanation') . "<br>";
-        echo "<strong>期限:</strong> " . $request->input('listing_deadline') . "<br>";
-        echo "<strong>取引形態:</strong> " . $request->input('transaction_type') . "<br>";
-        
-        // ハッシュタグを表示
-        $hashtags = $request->input('hashtags', []);
-        echo "<strong>ハッシュタグ:</strong> " .  implode(', ', array_filter($hashtags)) . "<br>";
-        
-        // 選択されたほしいものを表示
-        $wantGoodsIds = $request->input('want_goods_ids', []);
-        echo "<strong>選択されたほしいもの:</strong> " . implode(', ', $wantGoodsIds) . "<br>";
-        
-        // 画像ファイル情報を表示
-        if ($request->hasFile('images')) {
-            echo "<strong>アップロードされた画像:</strong><br>";
-            foreach ($request->file('images') as $index => $image) {
-                if ($image) {
-                    echo "画像" . ($index + 1) . ": " . $image->getClientOriginalName() . "<br>";
-                }
-            }
+        if (!$formData) {
+            return redirect()->route('register')->with('error', 'フォームデータが見つかりません');
         }
-        
-        // 全データをダンプ表示
-        echo "<h3>全データ:</h3>";
-        echo "<pre>";
-        var_dump($formData);
-        echo "</pre>";
-        
-        return response("データを受信しました");
+
+        // ほしいものの詳細情報を取得
+        $wantGoodsDetails = [];
+        if (!empty($formData['want_goods_ids'])) {
+            $wantGoodsDetails = WantGoods::whereIn('id', $formData['want_goods_ids'])
+                                        ->get(['id', 'want_goods_name'])
+                                        ->toArray();
+        }
+
+        return view('confirm', [
+            'formData' => $formData,
+            'wantGoodsDetails' => $wantGoodsDetails
+        ]);
     }
 }
