@@ -33,6 +33,17 @@ class goodsController extends Controller
 
         $category_name = Category::where('id',$request->input('category_id'))->value('category');
         $situation_name = Situation::where('id',$request->input('situation_id'))->value('goods_situation');
+
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                if ($image->isValid()) {
+                    // ファイルを一時的に保存し、パスを配列に追加
+                    $path = $image->store('temp', 'public');
+                    $imagePaths[] = $path;
+                }
+            }
+        }
         // セッションにデータを保存
         $request->session()->put('form_data', [
             'goods_name' => $request->input('goods_name'),

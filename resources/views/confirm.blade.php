@@ -80,6 +80,18 @@
         
         @if(isset($formData))
             <!-- 画像表示 -->
+             @if(!empty($formData['image_paths']))
+                <div class="form-group">
+                    <div class="label">画像:</div>
+                    <div class="image-gallery">
+                        @foreach($formData['image_paths'] as $path)
+                            <div class="image-item">
+                                <img src="{{ Storage::url($path) }}" alt="アップロード画像">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
 
             <!-- 物品名 -->
             <div class="form-group">
@@ -159,6 +171,7 @@
             <p>フォームデータが見つかりません。</p>
             <a href="{{ route('register') }}" class="btn btn-secondary">入力画面に戻る</a>
         @endif
+    @endif
     </div>
 
     <script>
