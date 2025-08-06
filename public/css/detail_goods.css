@@ -1,0 +1,248 @@
+@charset 'utf-8';
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* ヘッダーのスタイル */
+header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+header .return {
+  position: absolute;
+  left: 0;
+  color: #000000;
+  text-decoration: none;
+  font-size: 32px;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+header .return:hover {
+  background-color: #f0f8ff;
+  color: #0056b3;
+}
+
+header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+}
+
+.section {
+  padding: 10px;
+}
+
+.section h2 {
+  color: #333;
+  border-top: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+.goods_name{
+  text-align: center; 
+  font-size: 32px;
+}
+.hashtag {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 3px 8px;
+  margin: 2px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.want-goods-item {
+  border: 1px solid #eee;
+  padding: 0;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  overflow: hidden;
+}
+
+.want-goods-header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.want-goods-header:hover {
+  background-color: #0056b3;
+}
+
+.want-goods-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.accordion-icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.want-goods-content {
+  padding: 0 15px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: white;
+}
+
+.want-goods-content.active {
+  max-height: 1000px;
+  padding: 15px;
+}
+
+.want-goods-content p,
+.want-goods-content ul {
+  margin: 10px 0;
+}
+
+.json-display {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.image-list {
+  list-style: none;
+  padding: 0;
+}
+
+.image-list li {
+  background-color: #e9ecef;
+  padding: 5px 10px;
+  margin: 3px 0;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.image-list img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+/* スライドショーのスタイル */
+.slideshow-container {
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.slide {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.slide:first-child {
+  display: block;
+}
+.size_num{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 取引形態オーバーレイ */
+.transaction-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 123, 255, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ナビゲーションボタン */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s ease;
+  border-radius: 0 3px 3px 0;
+  background-color: rgba(0,0,0,0.5);
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* スライド番号 */
+.slide-number {
+  text-align: center;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+/* スライドショーのタイトル */
+.slideshow-title {
+  text-align: center;
+  margin: 15px 0 10px 0;
+  font-weight: bold;
+  color: #333;
+}
