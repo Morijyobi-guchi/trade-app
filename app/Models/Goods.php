@@ -27,4 +27,14 @@ class Goods extends Model
         'transaction_type' => 'integer',
         'show_flag' => 'integer'
     ];
+
+    public function image()
+    {
+        return $this->hasOne(GoodsImg::class, 'goods_id', 'id')
+                    ->where('displayorder_number',1);
+    }
+
+
+
+
 }
