@@ -14,22 +14,6 @@
 </head>
 <body>
 
-@php
-    // --- 表示確認用のダミーデータ ---
-    // この部分は、後でコントローラーから$goods変数を渡すようになったら削除してください。
-    $goods = [
-        (object)['id' => 1, 'goodsName' => 'ワイヤレスイヤホン 高音質モデル ブラック', 'imageUrl' => 'https://placehold.jp/3d4070/ffffff/150x150.png?text=Item1'],
-        (object)['id' => 2, 'goodsName' => 'ノートPCスタンド アルミ製 シルバーでとても使いやすいです', 'imageUrl' => 'https://placehold.jp/703d6a/ffffff/150x150.png?text=Item2'],
-        (object)['id' => 3, 'goodsName' => 'USB-C 急速充電器 65W対応', 'imageUrl' => null],
-        (object)['id' => 4, 'goodsName' => '静音設計ワイヤレスマウス', 'imageUrl' => 'https://placehold.jp/6a703d/ffffff/150x150.png?text=Item4'],
-        (object)['id' => 5, 'goodsName' => '4K対応Webカメラ', 'imageUrl' => 'https://placehold.jp/3d7063/ffffff/150x150.png?text=Item5'],
-        (object)['id' => 6, 'goodsName' => 'メカニカルキーボード（青軸）', 'imageUrl' => 'https://placehold.jp/705a3d/ffffff/150x150.png?text=Item6'],
-        (object)['id' => 7, 'goodsName' => 'モバイルバッテリー 10000mAh', 'imageUrl' => 'https://placehold.jp/523d70/ffffff/150x150.png?text=Item7'],
-        (object)['id' => 8, 'goodsName' => '27インチWQHDモニター', 'imageUrl' => 'https://placehold.jp/3d704b/ffffff/150x150.png?text=Item8'],
-        (object)['id' => 9, 'goodsName' => '拡張ドッキングステーション', 'imageUrl' => 'https://placehold.jp/703d3d/ffffff/150x150.png?text=Item9'],
-    ];
-@endphp
-
     <div class="container">
         <div class="search-bar">
             <input type="text" class="search-input" placeholder="検索">
@@ -48,26 +32,23 @@
 
         <div class="goods-grid">
             {{-- ダミーデータ（またはコントローラーから渡された$goods変数）をループ処理 --}}
-            @forelse ($goods as $good)
+            @foreach ($goods as $good)
                 <a href="/goods/{{ $good->id }}" class="goods-item">
-                    <div class="item-image-container">
-                        {{-- 画像URLが存在すれば表示、なければプレースホルダーを表示 --}}
-                        @if ($good->imageUrl)
-                            <img src="{{ $good->imageUrl }}" alt="{{ $good->goodsName }}" class="item-image">
-                        @else
-                            <img src="https://placehold.jp/150x150.png?text=No+Image" alt="画像なし" class="item-image">
-                        @endif
-                        <i class="fa-regular fa-star favorite-icon"></i>
-                    </div>
+
+                    @if ($good->image)
+                        {{-- 画像がある場合は、その画像を表示 --}}
+                        <img src="{{ asset('' . $good->image->img_pass) }}" alt="{{ $good->goods_name }}">
+                    @else
+                        {{-- 画像がない場合は、代替画像を表示 --}}
+                        <img src="https://placehold.jp/150x150.png?text=No+Image" alt="画像なし">
+                    @endif
                     <p class="item-name">{{ $good->goods_name }}</p>
                 </a>
-            @empty
-                <p>対象の商品はありません。</p>
-            @endforelse
+            @endforeach
         </div>
     </div>
 
-    <nav class="footer-nav">
+    <!-- <nav class="footer-nav">
         <a href="#" class="footer-item active">
             <i class="fa-solid fa-house"></i>
             <span>ホーム</span>
@@ -88,11 +69,9 @@
             <i class="fa-solid fa-user"></i>
             <span>マイページ</span>
         </a>
-    </nav> 
+    </nav>  -->
 
 </body>
 </html>
 
-@foreach ($goods as $good)
-<p>{{$good-> goods_name}}</p>
-@endforeach 
+
