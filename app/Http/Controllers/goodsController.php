@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\WantGoods;
 use App\Models\Category;
 use App\Models\Situation;
+use App\Models\Goods;
+use App\Models\GoodsImg;
+use App\Models\Hashtag;
+use App\Models\ProductToHashtag;
+use App\Models\ProductToWantgoodsToHashtag;
+use App\Models\WantlistToHashtag;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class goodsController extends Controller
 {
@@ -52,6 +60,8 @@ class goodsController extends Controller
             'situation_name' => $situation_name,
             'situation_id' => $request->input('situation_id'),
             'explanation' => $request->input('explanation'),
+            'size'=> $request->input('size'),
+            'quantity'=> $request->input('quantity'),
             'listing_deadline' => $request->input('listing_deadline'),
             'transaction_type' => $request->input('transaction_type'),
             'hashtags' => array_filter($request->input('hashtags', [])),
@@ -100,6 +110,8 @@ class goodsController extends Controller
                     'category_id' => $formData['category_id'],
                     'situation_id' => $formData['situation_id'],
                     'explanation' => $formData['explanation'],
+                    'size' => $formData['size'],
+                    'quantity' => $formData['quantity'],
                     'listing_deadline' => $formData['listing_deadline'],
                     'transaction_type' => $formData['transaction_type'],
                     'account_id' => 1, // TODO: ログインしているユーザーのIDに後で修正
@@ -127,7 +139,43 @@ class goodsController extends Controller
                     }
                 }
 
-                // TODO: ハッシュタグ、ほしいものの関連テーブルへの保存処理をここに追加
+                // 3. 物品のハッシュタグを処理
+                if (!empty($formData['hashtags'])) {
+                    $hashtagIds = [];
+                    foreach ($formData['hashtags'] as $hashtagName) {
+                        if(empty($hashtagName)) continue; // 空のタグはスキップ
+                        // ハッシュタグが存在しない場合は作成し、存在する場合はIDを取得
+                        $hashtag = Hashtag::firstOrCreate(['hashtag_name' => $hashtagName]);
+                        $hashtagIds[] = $hashtag->id;
+                    }
+
+                    // 中間テーブルに物品IDとカンマ区切りのハッシュタグIDリストを保存
+                    if (!empty($hashtagIds)) {
+                        ProductToHashtag::create([
+                            'goods_id' => $goods->id,
+                            'hashtag_list' => implode(',', $hashtagIds),
+                            'delete_flag' => 0,
+                        ]);
+                    }
+                }
+
+                // 4. ほしいものと、それに紐づくハッシュタグを関連テーブルに保存
+                if (!empty($formData['want_goods_ids'])) {
+                    foreach ($formData['want_goods_ids'] as $wantGoodsId) {
+                        // want_goods_id に紐づくハッシュタグリストを取得
+                        $wantHashtags = \App\Models\WantlistToHashtag::where('want_goods_ID', $wantGoodsId)
+                                                                    ->where('delete_flag', 0)
+                                                                    ->value('hashtag_list');
+
+                        // 関連テーブルに保存
+                        ProductToWantgoodsToHashtag::create([
+                            'goods_ID' => $goods->id,
+                            'want_goods_ID' => $wantGoodsId,
+                            'hashtag_list' => $wantHashtags, // 取得したハッシュタグリストをそのまま保存
+                            'delete_flag' => 0,
+                        ]);
+                    }
+                }
 
                 // 4. 処理が完了したらセッションデータを削除
                 $request->session()->forget('form_data');

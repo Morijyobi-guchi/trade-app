@@ -55,6 +55,18 @@
                 </div>
             @endif
 
+            <!-- サイズ -->
+            <div class="form-group">
+                <div class="label">サイズ:</div>
+                <div class="value">{{ $formData['size'] ?? '未入力' }}</div>
+            </div>
+
+            <!-- 数量 -->
+            <div class="form-group">
+                <div class="label">サイズ:</div>
+                <div class="value">{{ $formData['quantity'] ?? '未入力' }}</div>
+            </div>
+
             <!-- 説明 -->
             <div class="form-group">
                 <div class="label">説明:</div>
