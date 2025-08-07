@@ -24,4 +24,5 @@ Route::get('/goods-detail', [detailGoodsController::class, 'detail']);
 
 Route::get('/top', [topController::class, 'goods']);
 Route::get('/search', [searchGoodsController::class, 'search']);
+Route::post('/search/result', [searchGoodsController::class, 'searchResults']);
 
