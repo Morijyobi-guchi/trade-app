@@ -24,7 +24,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-8-31',
             'trading_status_id' => 1,
             'account_id' => 1,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         Goods::create([
@@ -38,7 +38,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-8-31',
             'trading_status_id' => 1,
             'account_id' => 2,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // ファッション
@@ -53,7 +53,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-9-15',
             'trading_status_id' => 1,
             'account_id' => 3,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // ゲーム・おもちゃ・グッズ
@@ -68,7 +68,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-10-01',
             'trading_status_id' => 1,
             'account_id' => 1,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // ホビー・楽器・アート
@@ -83,7 +83,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-9-30',
             'trading_status_id' => 1,
             'account_id' => 2,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // 本・漫画・雑誌
@@ -98,7 +98,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-11-30',
             'trading_status_id' => 1,
             'account_id' => 3,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // CD・DVD・ブルーレイ
@@ -113,7 +113,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-10-15',
             'trading_status_id' => 1,
             'account_id' => 1,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // スポーツ
@@ -128,7 +128,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-9-20',
             'trading_status_id' => 1,
             'account_id' => 2,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // アウトドア・釣り・旅行用品
@@ -143,7 +143,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-8-25',
             'trading_status_id' => 1,
             'account_id' => 3,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // コスメ・美容
@@ -158,7 +158,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-12-31',
             'trading_status_id' => 1,
             'account_id' => 1,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // 文房具
@@ -173,7 +173,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-10-31',
             'trading_status_id' => 1,
             'account_id' => 2,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // PC機器
@@ -188,7 +188,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-9-10',
             'trading_status_id' => 1,
             'account_id' => 3,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
 
         // その他
@@ -203,7 +203,7 @@ class GoodsSeeder extends Seeder
             'listing_deadline' => '2025-8-20',
             'trading_status_id' => 1,
             'account_id' => 1,
-            'delete_flag' => false,
+            'show_flag' => false,
         ]);
     }
 }

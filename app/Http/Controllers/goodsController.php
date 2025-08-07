@@ -104,7 +104,7 @@ class goodsController extends Controller
                     'transaction_type' => $formData['transaction_type'],
                     'account_id' => 1, // TODO: ログインしているユーザーのIDに後で修正
                     'trading_status_id' => 1, // '出品中'など
-                    'delete_flag' => 1,
+                    'show_flag' => 1,
                 ]);
 
                 // 2. 画像を処理
