@@ -5,6 +5,7 @@ use App\Http\Controllers\goodsController;
 use App\Http\Controllers\matchController;
 use App\Http\Controllers\detailGoodsController;
 use App\Http\Controllers\topController;
+use App\Http\Controllers\searchGoodsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,4 +23,5 @@ Route::get('/goods/confirm', [goodsController::class, 'confirm'])->name('goods.c
 Route::get('/goods-detail', [detailGoodsController::class, 'detail']);
 
 Route::get('/top', [topController::class, 'goods']);
+Route::get('/search', [searchGoodsController::class, 'search']);
 
