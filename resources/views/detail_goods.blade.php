@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <header>
-            <a class="return" href="">←</a>
+            <a class="return" href="top">←</a>
             <h1>出品物詳細</h1>
         </header>
         @if(isset($data['images']) && count($data['images']) > 0)
@@ -25,9 +25,9 @@
                 <a class="prev">&#10094;</a>
                 <a class="next">&#10095;</a>
                 @endif
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <div class="slide-number">1 / {{ count($data['images']) }}</div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <div class="slide-number">1 / {{ count($data['images']) }}</div>
+                </div>
             </div>
             <p class="goods_name">{{ $data['goods_name'] ?? 'データなし' }}</p>
         </div>
@@ -73,9 +73,9 @@
                                         <a class="prev">&#10094;</a>
                                         <a class="next">&#10095;</a>
                                         @endif
-                                    </div>
-                                    <div style="text-align: center; margin-top: 10px;">
-                                        <div class="slide-number">1 / {{ count($wantGoods['images']) }}</div>
+                                        <div style="text-align: center; margin-top: 10px;">
+                                            <div class="slide-number">1 / {{ count($wantGoods['images']) }}</div>
+                                        </div>
                                     </div>
                                 @endif
                                 
