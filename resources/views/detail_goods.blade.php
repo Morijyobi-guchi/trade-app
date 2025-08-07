@@ -45,8 +45,8 @@
                     @endif
                 </div>
                 <div class="size_num">
-                    <p><strong>サイズ:</strong> {{ $data['size'] ?? 'データなし' }}</p>
-                    <p><strong>数量:</strong> {{ $data['quantity'] ?? 'データなし' }}</p>
+                    <p class="size"><strong>サイズ:</strong> {{ $data['size'] ?? 'データなし' }}</p>
+                    <p class="num"><strong>数量:</strong> {{ $data['quantity'] ?? 'データなし' }}</p>
                 </div>
                     <p><strong>説明:</strong> {{ $data['description'] ?? 'データなし' }}</p>
             </div>
