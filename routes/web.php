@@ -1,5 +1,3 @@
-// routes/web.php
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -23,9 +21,6 @@ Route::get('/register', [goodsController::class, 'getWantGoods'])->name('registe
 Route::post('/goods/store', [goodsController::class, 'store'])->name('goods.store');
 Route::get('/goods/confirm', [goodsController::class, 'confirm'])->name('goods.confirm');
 Route::get('/goods-detail', [detailGoodsController::class, 'detail']);
-
 Route::get('/top', [topController::class, 'goods']);
 Route::get('/search', [searchGoodsController::class, 'search']);
 Route::post('/search/result', [searchGoodsController::class, 'searchResults']);
-
-
