@@ -15,7 +15,7 @@
         </header>
         
         <div class="form-container">
-            <form action="" method="POST" class="search-form">
+            <form action="{{ asset('/search/result') }}" method="POST" class="search-form">
                 @csrf
                 
                 <!-- 検索ボックス -->
