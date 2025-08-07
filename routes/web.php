@@ -19,6 +19,7 @@ Route::get('/match-tags', [matchController::class, 'matchTags']);
 Route::get('/register', [goodsController::class, 'getWantGoods'])->name('register');;
 Route::post('/goods/store', [goodsController::class, 'store'])->name('goods.store');
 Route::get('/goods/confirm', [goodsController::class, 'confirm'])->name('goods.confirm');
+Route::post('/goods/create', [goodsController::class, 'create'])->name('goods.create');
 Route::get('/goods-detail', [detailGoodsController::class, 'detail']);
 
 Route::get('/top', [topController::class, 'goods']);

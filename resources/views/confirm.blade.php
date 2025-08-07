@@ -94,23 +94,18 @@
             @endif
 
             <!-- ボタン -->
-            <div class="buttons">
-                <a href="{{ route('register') }}" class="btn btn-secondary">戻る</a>
-                <button type="button" class="btn btn-primary" onclick="submitForm()">出品する</button>
-            </div>
+           <form action="{{ route('goods.create') }}" method="POST" id="confirmForm">
+                @csrf
+                <div class="buttons">
+                    <a href="{{ route('register') }}" class="btn btn-secondary">戻る</a>
+                    <button type="submit" class="btn btn-primary">出品する</button>
+                </div>
+            </form>
 
         @else
             <p>フォームデータが見つかりません。</p>
             <a href="{{ route('register') }}" class="btn btn-secondary">入力画面に戻る</a>
         @endif
     </div>
-
-    <script>
-        function submitForm() {
-            // 実際の出品処理をここに実装
-            alert('出品が完了しました！');
-            window.location.href = "{{ route('register') }}";
-        }
-    </script>
 </body>
 </html>

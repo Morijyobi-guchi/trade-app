@@ -83,4 +83,61 @@ class goodsController extends Controller
             'wantGoodsDetails' => $wantGoodsDetails
         ]);
     }
+
+    public function create(Request $request)
+    {
+        $formData = $request->session()->get('form_data');
+
+        if (!$formData) {
+            return redirect()->route('register')->with('error', 'セッションデータが見つかりません。もう一度やり直してください。');
+        }
+
+        try {
+            DB::transaction(function () use ($formData, $request) {
+                // 1. goodsテーブルにデータを保存
+                $goods = Goods::create([
+                    'goods_name' => $formData['goods_name'],
+                    'category_id' => $formData['category_id'],
+                    'situation_id' => $formData['situation_id'],
+                    'explanation' => $formData['explanation'],
+                    'listing_deadline' => $formData['listing_deadline'],
+                    'transaction_type' => $formData['transaction_type'],
+                    'account_id' => 1, // TODO: ログインしているユーザーのIDに後で修正
+                    'trading_status_id' => 1, // '出品中'など
+                    'delete_flag' => 1,
+                ]);
+
+                // 2. 画像を処理
+                if (!empty($formData['image_paths'])) {
+                    foreach ($formData['image_paths'] as $index => $tempPath) {
+                        $extension = pathinfo(storage_path('app/public/' . $tempPath), PATHINFO_EXTENSION);
+                        $newFileName = 'g_' . $goods->id . '_' . ($index + 1) . '.' . $extension;
+                        $newPath = 'images/goods/' . $newFileName;
+
+                        // public/temp から public/images/goods へファイルを移動
+                        Storage::disk('public')->move($tempPath, $newPath);
+
+                        // 3. goods_imgテーブルに画像の情報を保存
+                        GoodsImg::create([
+                            'goods_id' => $goods->id,
+                            'img_pass' => $newPath,
+                            'displayorder_number' => $index + 1,
+                            'delete_flag' => 0,
+                        ]);
+                    }
+                }
+
+                // TODO: ハッシュタグ、ほしいものの関連テーブルへの保存処理をここに追加
+
+                // 4. 処理が完了したらセッションデータを削除
+                $request->session()->forget('form_data');
+            });
+        } catch (\Exception $e) {
+            // エラーが発生した場合はロールバックされ、エラーメッセージと共にリダイレクト
+            return redirect()->route('register')->with('error', '出品処理中にエラーが発生しました。' . $e->getMessage());
+        }
+
+        // 5. 完了ページへリダイレクト
+        return redirect()->route('register')->with('success', '出品が完了しました！');
+    }
 }
