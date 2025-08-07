@@ -56,7 +56,7 @@ class goodsController extends Controller
             'transaction_type' => $request->input('transaction_type'),
             'hashtags' => array_filter($request->input('hashtags', [])),
             'want_goods_ids' => $request->input('want_goods_ids', []),
-            // 'image_paths' => $imagePaths
+            'image_paths' => $imagePaths
         ]);
 
         return redirect()->route('goods.confirm');

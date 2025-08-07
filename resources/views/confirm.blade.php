@@ -3,76 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('./css/confirm.css') }}">
     <title>確認画面</title>
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-        .label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        .value {
-            margin-left: 10px;
-            color: #666;
-        }
-        .image-gallery {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .image-item {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .image-item img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-        }
-        .hashtags {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .hashtag {
-            background-color: #f0f0f0;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 14px;
-        }
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-        }
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -171,7 +103,6 @@
             <p>フォームデータが見つかりません。</p>
             <a href="{{ route('register') }}" class="btn btn-secondary">入力画面に戻る</a>
         @endif
-    @endif
     </div>
 
     <script>
