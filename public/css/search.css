@@ -215,7 +215,7 @@ body {
     transition: background-color 0.3s ease;
     align-self: center;
     min-width: 200px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .submit-button:hover {
