@@ -69,5 +69,45 @@ class HashtagSeeder extends Seeder
         Hashtag::create([
             'hashtag_name' => '格安',
         ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'Tシャツ',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'メンズ',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => '教科書・参考書',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'おしゃれ',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'デニム',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'カード',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => '初心者向け',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => '全巻セット',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'Blu-ray',
+        ]);
+
+        Hashtag::create([
+            'hashtag_name' => 'テニス',
+        ]);
     }
 }
