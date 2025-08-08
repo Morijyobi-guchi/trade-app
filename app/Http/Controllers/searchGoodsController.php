@@ -34,7 +34,7 @@ class searchGoodsController extends Controller
         $status = $request->input('status');
 
         // 物品の基本クエリを構築
-        $goodsQuery = Goods::where('delete_flag', 0);
+        $goodsQuery = Goods::where('show_flag', 0);
 
         // 取引形態による絞り込み
         if (!empty($tradeTypes)) {
