@@ -84,8 +84,63 @@ class searchGoodsController extends Controller
         // 物品を取得
         $goods = $goodsQuery->get();
 
+        // condition=used の場合、仮のアカウントID(1)の出品物のハッシュタグと
+        // 共通ハッシュタグが2つ以上ある物品に絞り込む
+        if ($condition === 'used') {
+            $accountId = 1; // TODO: 実装時は認証情報から取得
+
+            // ユーザーの出品物ID
+            $userGoodsIds = Goods::where('account_id', $accountId)->pluck('id');
+
+            // ユーザーのハッシュタグ集合を作成
+            $userHashtagLists = ProductToHashtag::whereIn('goods_id', $userGoodsIds)
+                ->where('delete_flag', 0)
+                ->pluck('hashtag_list');
+
+            $userHashtags = collect();
+            foreach ($userHashtagLists as $list) {
+                foreach (explode(',', (string)$list) as $tag) {
+                    $t = trim($tag);
+                    if ($t !== '') {
+                        $userHashtags->push($t);
+                    }
+                }
+            }
+            $userHashtags = $userHashtags->unique()->values();
+
+            // ユーザーにハッシュタグがなければ結果は空
+            if ($userHashtags->isNotEmpty()) {
+                // 取得済み物品のハッシュタグを一括取得してグルーピング（N+1回避）
+                $allGoodsIds = $goods->pluck('id');
+                $goodsTagRows = ProductToHashtag::whereIn('goods_id', $allGoodsIds)
+                    ->where('delete_flag', 0)
+                    ->get()
+                    ->groupBy('goods_id');
+
+                // 共通タグが2つ以上のものだけ残す
+                $goods = $goods->filter(function ($good) use ($goodsTagRows, $userHashtags) {
+                    $rows = $goodsTagRows->get($good->id, collect());
+                    $tags = collect();
+                    foreach ($rows as $row) {
+                        foreach (explode(',', (string)$row->hashtag_list) as $tag) {
+                            $t = trim($tag);
+                            if ($t !== '') {
+                                $tags->push($t);
+                            }
+                        }
+                    }
+                    $tags = $tags->unique();
+                    $intersectionCount = $tags->intersect($userHashtags)->count();
+                    return $intersectionCount >= 2;
+                })->values();
+            } else {
+                // ユーザー側に参照ハッシュタグがなければ何も表示しない
+                $goods = collect();
+            }
+        }
+
         // 各物品に画像情報を追加
-        foreach ($goods as $good) {
+    foreach ($goods as $good) {
             $firstImage = GoodsImg::where('goods_id', $good->id)
                                  ->where('delete_flag', 0)
                                  ->orderBy('displayorder_number')
