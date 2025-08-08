@@ -80,6 +80,7 @@
                                 <option value="0">制限なし</option>
                                 <option value="3">3日以内</option>
                                 <option value="7">一週間以内</option>
+                                <option value="30">一か月以内</option>
                                 <option value="180">半年以内</option>
                                 <option value="365">一年以内</option>
                             </select>
