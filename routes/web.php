@@ -23,6 +23,6 @@ Route::post('/goods/store', [goodsController::class, 'store'])->name('goods.stor
 Route::get('/goods/confirm', [goodsController::class, 'confirm'])->name('goods.confirm');
 Route::get('/goods-detail', [detailGoodsController::class, 'detail']);
 
-Route::get('/top', [topController::class, 'goods']);
+Route::get('/top', [topController::class, 'index']);
 
 
