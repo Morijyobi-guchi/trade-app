@@ -9,6 +9,7 @@ use App\Models\Situation;
 use App\Models\Goods;
 use App\Models\GoodsImg;
 use App\Models\ProductToHashtag;
+use Carbon\Carbon;
 
 class searchGoodsController extends Controller
 {
@@ -32,6 +33,7 @@ class searchGoodsController extends Controller
         $tradeTypes = $request->input('trade_type', []);
         $categories = $request->input('category', []);
         $status = $request->input('status');
+        $deadline = $request->input('deadline');
 
         // 物品の基本クエリを構築
         $goodsQuery = Goods::where('show_flag', 0);
@@ -59,6 +61,11 @@ class searchGoodsController extends Controller
             $goodsQuery->where('situation_id', $status);
         }
 
+        // 期限による絞り込み
+        if ($deadline && $deadline != 0) {
+            $limitDate = Carbon::now()->addDays((int)$deadline)->toDateString();
+            $goodsQuery->whereDate('listing_deadline', '<=', $limitDate);
+        }
         // ハッシュタグによる絞り込み
         if ($query) {
             // ハッシュタグからgoods_idを取得
