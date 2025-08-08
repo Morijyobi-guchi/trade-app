@@ -66,18 +66,46 @@ class searchGoodsController extends Controller
             $limitDate = Carbon::now()->addDays((int)$deadline)->toDateString();
             $goodsQuery->whereDate('listing_deadline', '<=', $limitDate);
         }
-        // ハッシュタグによる絞り込み
-        if ($query) {
-            // ハッシュタグからgoods_idを取得
-            $hashtagGoodsIds = ProductToHashtag::where('delete_flag', 0)
-                ->where('hashtag_list', 'LIKE', '%' . $query . '%')
-                ->pluck('goods_id');
-            
-            if ($hashtagGoodsIds->isNotEmpty()) {
-                $goodsQuery->whereIn('id', $hashtagGoodsIds);
-            } else {
-                // ハッシュタグが見つからない場合は結果を空にする
-                $goodsQuery->where('id', 0);
+        // ハッシュタグによる絞り込み（カンマ区切りで複数指定に対応）
+        if (!empty($query)) {
+            // 全角読点や全角カンマも区切りとして扱う
+            $normalized = str_replace(['、', '，'], ',', $query);
+            // 分割・トリム・先頭#除去・空要素除外・重複排除
+            $tags = collect(explode(',', $normalized))
+                ->map(function ($t) {
+                    $t = trim($t);
+                    // 先頭の#を除去
+                    if (isset($t[0]) && $t[0] === '#') {
+                        $t = ltrim($t, '#');
+                    }
+                    return trim($t);
+                })
+                ->filter(function ($t) { return $t !== ''; })
+                ->unique()
+                ->values();
+
+            if ($tags->isNotEmpty()) {
+                // タグごとに一致するgoods_idを取得し、積集合（AND条件）を計算
+                $perTagGoodsIdSets = $tags->map(function ($tag) {
+                    return ProductToHashtag::where('delete_flag', 0)
+                        ->where('hashtag_list', 'LIKE', '%' . $tag . '%')
+                        ->pluck('goods_id')
+                        ->unique();
+                });
+
+                $intersection = $perTagGoodsIdSets->reduce(function ($carry, $ids) {
+                    if ($carry === null) {
+                        return $ids; // 最初の集合
+                    }
+                    return $carry->intersect($ids)->values();
+                }, null);
+
+                if ($intersection && $intersection->isNotEmpty()) {
+                    $goodsQuery->whereIn('id', $intersection->values());
+                } else {
+                    // ハッシュタグが見つからない場合は結果を空にする
+                    $goodsQuery->where('id', 0);
+                }
             }
         }
 
