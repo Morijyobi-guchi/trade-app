@@ -110,9 +110,6 @@ body {
 .form-section {
     padding: 15px;
     margin-bottom: 15px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
 }
 
 .form-section h3 {
@@ -215,7 +212,7 @@ body {
     transition: background-color 0.3s ease;
     align-self: center;
     min-width: 200px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .submit-button:hover {
@@ -263,7 +260,37 @@ body {
         text-align: center;
     }
 }
+/* フッターナビゲーション */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    padding: 8px 0;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+}
 
+.footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.footer-item .fa-solid {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.footer-item.active {
+    color: #007bff;
+}
 @media (max-width: 480px) {
     body {
         margin: 5px;
