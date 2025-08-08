@@ -11,6 +11,16 @@
         <img src="{{ Storage::url('images/left_arrow.png') }}" alt="左矢印">
         <p>出品する</p>
     </div>
+    @if (session('error'))
+        <div class="alert alert-danger" style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success" style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
+            {{ session('success') }}
+        </div>
+    @endif
     <form action="{{ route('goods.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div id="imageContainer">
@@ -61,6 +71,14 @@
                 <input type="text" name="hashtags[]">
             </div>
             <div><img src="{{ Storage::url('images/plus.png') }}" alt="プラス"></div>
+        </div>
+        <div>
+            <p>サイズ</p>
+            <input type="text" name="size">
+        </div>
+        <div>
+            <p>数量</p>
+            <input type="text" name="quantity">
         </div>
         <div>
             <p>説明</p>

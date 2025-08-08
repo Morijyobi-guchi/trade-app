@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('listing_deadline');
             $table->integer('trading_status_id');
             $table->integer('account_id');
-            $table->boolean('delete_flag')->default(0);
+            $table->boolean('show_flag')->default(0);
             $table->timestamps();
         });
     }

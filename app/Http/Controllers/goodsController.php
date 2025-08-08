@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\WantGoods;
 use App\Models\Category;
 use App\Models\Situation;
+use App\Models\Goods;
+use App\Models\GoodsImg;
+use App\Models\Hashtag;
+use App\Models\ProductToHashtag;
+use App\Models\ProductToWantgoodsToHashtag;
+use App\Models\WantlistToHashtag;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class goodsController extends Controller
 {
@@ -52,11 +60,13 @@ class goodsController extends Controller
             'situation_name' => $situation_name,
             'situation_id' => $request->input('situation_id'),
             'explanation' => $request->input('explanation'),
+            'size'=> $request->input('size'),
+            'quantity'=> $request->input('quantity'),
             'listing_deadline' => $request->input('listing_deadline'),
             'transaction_type' => $request->input('transaction_type'),
             'hashtags' => array_filter($request->input('hashtags', [])),
             'want_goods_ids' => $request->input('want_goods_ids', []),
-            // 'image_paths' => $imagePaths
+            'image_paths' => $imagePaths
         ]);
 
         return redirect()->route('goods.confirm');
@@ -82,5 +92,100 @@ class goodsController extends Controller
             'formData' => $formData,
             'wantGoodsDetails' => $wantGoodsDetails
         ]);
+    }
+
+    public function create(Request $request)
+    {
+        $formData = $request->session()->get('form_data');
+
+        if (!$formData) {
+            return redirect()->route('register')->with('error', 'セッションデータが見つかりません。もう一度やり直してください。');
+        }
+
+        try {
+            DB::transaction(function () use ($formData, $request) {
+                // 1. goodsテーブルにデータを保存
+                $goods = Goods::create([
+                    'goods_name' => $formData['goods_name'],
+                    'category_id' => $formData['category_id'],
+                    'situation_id' => $formData['situation_id'],
+                    'explanation' => $formData['explanation'],
+                    'size' => $formData['size'],
+                    'quantity' => $formData['quantity'],
+                    'listing_deadline' => $formData['listing_deadline'],
+                    'transaction_type' => $formData['transaction_type'],
+                    'account_id' => 1, // TODO: ログインしているユーザーのIDに後で修正
+                    'trading_status_id' => 1, // '出品中'など
+                    'show_flag' => 1,
+                ]);
+
+                // 2. 画像を処理
+                if (!empty($formData['image_paths'])) {
+                    foreach ($formData['image_paths'] as $index => $tempPath) {
+                        $extension = pathinfo(storage_path('app/public/' . $tempPath), PATHINFO_EXTENSION);
+                        $newFileName = 'g_' . $goods->id . '_' . ($index + 1) . '.' . $extension;
+                        $newPath = 'images/goods/' . $newFileName;
+
+                        // public/temp から public/images/goods へファイルを移動
+                        Storage::disk('public')->move($tempPath, $newPath);
+
+                        // 3. goods_imgテーブルに画像の情報を保存
+                        GoodsImg::create([
+                            'goods_id' => $goods->id,
+                            'img_pass' => $newPath,
+                            'displayorder_number' => $index + 1,
+                            'delete_flag' => 0,
+                        ]);
+                    }
+                }
+
+                // 3. 物品のハッシュタグを処理
+                if (!empty($formData['hashtags'])) {
+                    $hashtagIds = [];
+                    foreach ($formData['hashtags'] as $hashtagName) {
+                        if(empty($hashtagName)) continue; // 空のタグはスキップ
+                        // ハッシュタグが存在しない場合は作成し、存在する場合はIDを取得
+                        $hashtag = Hashtag::firstOrCreate(['hashtag_name' => $hashtagName]);
+                        $hashtagIds[] = $hashtag->id;
+                    }
+
+                    // 中間テーブルに物品IDとカンマ区切りのハッシュタグIDリストを保存
+                    if (!empty($hashtagIds)) {
+                        ProductToHashtag::create([
+                            'goods_id' => $goods->id,
+                            'hashtag_list' => implode(',', $hashtagIds),
+                            'delete_flag' => 0,
+                        ]);
+                    }
+                }
+
+                // 4. ほしいものと、それに紐づくハッシュタグを関連テーブルに保存
+                if (!empty($formData['want_goods_ids'])) {
+                    foreach ($formData['want_goods_ids'] as $wantGoodsId) {
+                        // want_goods_id に紐づくハッシュタグリストを取得
+                        $wantHashtags = \App\Models\WantlistToHashtag::where('want_goods_ID', $wantGoodsId)
+                                                                    ->where('delete_flag', 0)
+                                                                    ->value('hashtag_list');
+
+                        // 関連テーブルに保存
+                        ProductToWantgoodsToHashtag::create([
+                            'goods_ID' => $goods->id,
+                            'want_goods_ID' => $wantGoodsId,
+                            'hashtag_list' => $wantHashtags, // 取得したハッシュタグリストをそのまま保存
+                            'delete_flag' => 0,
+                        ]);
+                    }
+                }
+
+                // 4. 処理が完了したらセッションデータを削除
+                $request->session()->forget('form_data');
+            });
+        } catch (\Exception $e) {
+            // エラーが発生した場合はロールバックされ、エラーメッセージと共にリダイレクト
+            return redirect()->route('register')->with('error', '出品処理中にエラーが発生しました。' . $e->getMessage());
+        }
+
+        // 5. 完了ページへリダイレクト
+        return redirect()->route('register')->with('success', '出品が完了しました！');
     }
 }
