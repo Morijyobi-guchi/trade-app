@@ -185,8 +185,8 @@ header h1 {
   display: flex;
   justify-content: space-between;
 }
-.num{
-  margin-right: 30%;
+.deadline{
+  margin-right: 10%;
 }
 /* 取引形態オーバーレイ */
 .transaction-overlay {

@@ -103,6 +103,7 @@ class detailGoodsController extends Controller
             'situation' => $situation ? $situation->goods_situation : null,
             'size' => $goods->size,
             'quantity' => $goods->quantity,
+            'listing_deadline' => $goods->listing_deadline ? $goods->listing_deadline->format('Y-m-d') : null,
             'transaction_type' => $goods->transaction_type == 0 ? "交換" : "譲渡",
             'want_goods' => $wantGoodsList
         ];
